@@ -27,17 +27,16 @@ function Hero() {
                 component="img"
                 sx={{ width: "20vh", borderRadius: "100px" }}
                 image={myImage}
-                alt="Live from space album cover"
               />
             </Box>
             <CardContent sx={{ flex: "1 0 auto" }}>
               <Typography component="div" variant="h5">
                 <span style={{ color: "white", fontFamily: "Fira Code" }}>
                   {" "}
-                  Hey, I'm Wasim.
+                  Hey, I'm Wasim. 
                 </span>
                 <span style={{ color: "lightgray", fontFamily: "Fira Code" }}>
-                  I'm a full stack developer.
+                   {" "}I'm a full stack developer.
                 </span>
               </Typography>
               <Typography
