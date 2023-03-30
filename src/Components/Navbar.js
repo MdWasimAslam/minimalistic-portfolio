@@ -22,21 +22,23 @@ function Navbar() {
               component="div"
               sx={{ fontFamily: "Fira Code", marginRight: "1.5vw" }}
             >
-              Skills
+              <a href="#skills" style={{color:"white",textDecoration:"none"}}>Skills</a>
             </Typography>
             <Typography
               variant="h6"
               component="div"
               sx={{ fontFamily: "Fira Code", marginRight: "1.5vw" }}
             >
-              Projects
+                            <a href="#projects" style={{color:"white",textDecoration:"none"}}>Projects</a>
+
             </Typography>
             <Typography
               variant="h6"
               component="div"
               sx={{ fontFamily: "Fira Code", marginRight: "1.5vw" }}
             >
-              Timeline
+                                          <a href="#experience" style={{color:"white",textDecoration:"none"}}>Experience</a>
+
             </Typography>
           </Toolbar>
         </AppBar>

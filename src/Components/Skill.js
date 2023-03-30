@@ -6,6 +6,7 @@ function Skill() {
     <div>
       <Container width="100%">
         <Box
+        id={"skills"}
           sx={{
             display: "flex",
             flexDirection: "column",
@@ -18,7 +19,7 @@ function Skill() {
             <h3>Skills</h3>
           </div>
 
-          <div style={{display:"flex" ,gap:"1vw"}}>
+          <div style={{display:"flex" ,gap:"1vw",marginTop:"2vh"}}>
           <Avatar alt="skill-tech"   sx={{ width: 56, height: 56 }} src="https://cdn3.iconfinder.com/data/icons/popular-services-brands/512/html5-512.png" />
           <Avatar alt="skill-tech"   sx={{ width: 56, height: 56 }} src="https://cdn1.iconfinder.com/data/icons/social-media-logos-7/64/css-3-512.png" />
           <Avatar alt="skill-tech"   sx={{ width: 56, height: 56 }} src="https://ih1.redbubble.net/image.815350031.4911/st,small,507x507-pad,600x600,f8f8f8.u1.jpg" />

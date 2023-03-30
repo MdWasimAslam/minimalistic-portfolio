@@ -69,19 +69,34 @@ function Hero() {
                       style={{ display: "flex", alignItems: "center", gap: 7 }}
                     >
                       <LinkedInIcon sx={{ color: "#2966BC" }} />{" "}
-                      <span>LinkedIn</span>
+                      <a
+                        href="https://www.linkedin.com/in/md-wasim-aslam/"
+                        style={{ textDecoration: "none", color: "lightgrey" }}
+                      >
+                        <span>LinkedIn</span>
+                      </a>
                     </div>
                     <div
                       style={{ display: "flex", alignItems: "center", gap: 7 }}
                     >
                       <YouTubeIcon sx={{ color: "#ff433d" }} />{" "}
-                      <span>Youtube</span>
+                      <a
+                        href="https://www.youtube.com/channel/UCZmOMkYG2aBgbY13ZI_2mJw"
+                        style={{ textDecoration: "none", color: "lightgrey" }}
+                      >
+                        <span>YouTube</span>
+                      </a>
                     </div>
                     <div
                       style={{ display: "flex", alignItems: "center", gap: 7 }}
                     >
                       <EmailIcon sx={{ color: "#26A1D6" }} />{" "}
-                      <span>Contact</span>
+                      <a
+                        href="mailto:wasimaslam2897@gmail.com"
+                        style={{ textDecoration: "none", color: "lightgrey" }}
+                      >
+                        <span>Contact</span>
+                      </a>
                     </div>
                   </Stack>
                 </div>
