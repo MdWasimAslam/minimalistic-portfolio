@@ -115,7 +115,7 @@ Two ways to change what the site shows:
 
 A password-gated editor that writes a single JSON document to **Neon Postgres** through the serverless functions in `api/`. On load, the site fetches `/api/content` and merges any saved overrides over the static defaults.
 
-- Edit About (text + résumé link), Stack, Projects (JSON), and Career (JSON), then **Save**.
+- A friendly, **form-based** editor with tabs (About · Work · Career · Education): add/remove/reorder items, toggle a project's "Featured" state, edit every field directly, then **Save**.
 - Config lives in **`api/_config.js`** (`DATABASE_URL`, `ADMIN_PASSWORD`).
 
 > ⚠️ `api/_config.js` currently hardcodes the credentials for testing. For a real deployment, move them to **Vercel Environment Variables** and read from `process.env` instead — never point this at a production database with the password committed.
