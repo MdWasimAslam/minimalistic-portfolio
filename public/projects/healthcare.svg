@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img" aria-label="Abstract drug-compound molecular structure">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#161A22"/>
+      <stop offset="1" stop-color="#0D0F14"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.42" r="0.6">
+      <stop offset="0" stop-color="#243043" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#243043" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#bg)"/>
+  <rect width="800" height="500" fill="url(#glow)"/>
+
+  <!-- faint background lattice -->
+  <g stroke="#FFFFFF" stroke-opacity="0.05" stroke-width="1.5" fill="none">
+    <polygon points="120,420 142,458 120,496 76,496 54,458 76,420"/>
+    <polygon points="690,90 712,128 690,166 646,166 624,128 646,90"/>
+    <polygon points="620,420 642,458 620,496 576,496 554,458 576,420"/>
+  </g>
+
+  <!-- main compound -->
+  <g stroke="#C9CCD2" stroke-width="2.6" fill="none" stroke-linejoin="round" stroke-linecap="round">
+    <!-- ring A -->
+    <polygon points="294,250 272,288 228,288 206,250 228,212 272,212"/>
+    <!-- ring B (upper) -->
+    <polygon points="416,212 394,250 350,250 328,212 350,174 394,174"/>
+    <!-- ring C (lower) -->
+    <polygon points="416,330 394,368 350,368 328,330 350,292 394,292"/>
+    <!-- ring D (right) -->
+    <polygon points="538,268 516,306 472,306 450,268 472,230 516,230"/>
+
+    <!-- inner double-bond hints -->
+    <line x1="262" y1="220" x2="248" y2="244"/>
+    <line x1="404" y1="246" x2="360" y2="246"/>
+    <line x1="460" y1="262" x2="506" y2="236"/>
+
+    <!-- connecting bonds -->
+    <line x1="272" y1="212" x2="328" y2="212"/>
+    <line x1="272" y1="288" x2="328" y2="292"/>
+    <line x1="416" y1="212" x2="450" y2="240"/>
+    <line x1="416" y1="330" x2="450" y2="296"/>
+
+    <!-- pendant bonds -->
+    <line x1="350" y1="174" x2="350" y2="138"/>
+    <line x1="538" y1="268" x2="582" y2="268"/>
+    <line x1="350" y1="368" x2="350" y2="404"/>
+  </g>
+
+  <!-- atoms -->
+  <g fill="#C9CCD2">
+    <circle cx="206" cy="250" r="4"/><circle cx="294" cy="250" r="4"/>
+    <circle cx="416" cy="212" r="4"/><circle cx="416" cy="330" r="4"/>
+    <circle cx="538" cy="268" r="4"/><circle cx="472" cy="230" r="4"/>
+  </g>
+
+  <!-- atom labels -->
+  <g fill="#EAECEF" font-family="'Fira Code', monospace" font-size="20" text-anchor="middle">
+    <circle cx="350" cy="126" r="14" fill="#0D0F14" stroke="#C9CCD2" stroke-width="2"/>
+    <text x="350" y="133">O</text>
+    <circle cx="600" cy="268" r="14" fill="#0D0F14" stroke="#C9CCD2" stroke-width="2"/>
+    <text x="600" y="275">N</text>
+    <circle cx="350" cy="422" r="16" fill="#0D0F14" stroke="#C9CCD2" stroke-width="2"/>
+    <text x="350" y="429" font-size="16">OH</text>
+  </g>
+
+  <text x="48" y="60" fill="#EAECEF" font-family="'Inter', sans-serif" font-size="22" font-weight="600" letter-spacing="-0.5">C₂₁H₂₈N₂O₅</text>
+  <text x="48" y="86" fill="#9CA0A8" font-family="'Fira Code', monospace" font-size="13" letter-spacing="1">COHORT ANALYTICS</text>
+</svg>

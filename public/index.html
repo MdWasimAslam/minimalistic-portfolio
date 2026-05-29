@@ -2,20 +2,38 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="../src/Images/my-logo.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#121316" />
     <meta
       name="description"
-      content="Web site created using create-react-app"
+      content="Md Wasim Aslam — Full Stack Developer & Frontend Engineer. 4+ years building scalable, high-performance web & mobile applications with React, Node.js and AI."
     />
-    <link rel="apple-touch-icon" href="../src/Images/my-logo.png" />
-   
-    <title>Wasim's Portfolio</title>
+    <meta name="author" content="Md Wasim Aslam" />
+    <meta name="keywords" content="Md Wasim Aslam, Full Stack Developer, Frontend Engineer, React Developer, React Native, Node.js, Portfolio" />
+
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Md Wasim Aslam — Full Stack Developer" />
+    <meta property="og:description" content="Premium portfolio of Md Wasim Aslam, Full Stack Developer & Frontend Engineer." />
+
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>Md Wasim Aslam — Full Stack Developer</title>
+    <script>
+      // Apply saved theme before first paint (default dark) to avoid a flash.
+      try { document.documentElement.dataset.mode = localStorage.getItem("mode") || "dark"; }
+      catch (e) { document.documentElement.dataset.mode = "dark"; }
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-   
   </body>
 </html>
