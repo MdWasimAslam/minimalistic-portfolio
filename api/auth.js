@@ -22,6 +22,9 @@ module.exports = async (req, res) => {
     res.setHeader("Allow", "POST");
     return res.status(405).json({ error: "Method not allowed" });
   }
+  if (!ADMIN_PASSWORD) {
+    return res.status(500).json({ error: "ADMIN_PASSWORD is not configured." });
+  }
   const body = await readBody(req);
   const ok = !!body && body.password === ADMIN_PASSWORD;
   return res.status(ok ? 200 : 401).json({ ok });

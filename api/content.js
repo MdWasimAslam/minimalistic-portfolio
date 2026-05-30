@@ -44,7 +44,7 @@ module.exports = async (req, res) => {
 
     if (req.method === "POST") {
       const body = await readBody(req);
-      if (!body || body.password !== ADMIN_PASSWORD) {
+      if (!ADMIN_PASSWORD || !body || body.password !== ADMIN_PASSWORD) {
         return res.status(401).json({ error: "Unauthorized" });
       }
       const data = body.data && typeof body.data === "object" ? body.data : {};
