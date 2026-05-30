@@ -28,7 +28,7 @@ export const projects = [
   {
     title: "ClearedTalent",
     kind: "Applicant tracking · NLB",
-    year: "2022–25",
+    year: "2022–24",
     description:
       "An in-house ATS that automates interview scheduling, candidate tracking and résumé parsing. React front end, Node/Express + MongoDB with role-based access — cut time-to-hire by ~30%.",
     image: "/projects/clearedtalent.jpg",
@@ -52,7 +52,7 @@ export const projects = [
   {
     title: "Healthcare Analytics",
     kind: "Data platform · NLB",
-    year: "2022–25",
+    year: "2022–24",
     description:
       "Node/Express data pipelines and interactive D3.js dashboards turning patient data into cohort insights.",
     image: "/projects/healthcare.svg",

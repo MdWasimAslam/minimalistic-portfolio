@@ -25,7 +25,15 @@ import ArrowDownwardRoundedIcon from "@mui/icons-material/ArrowDownwardRounded";
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import OpenInNewRoundedIcon from "@mui/icons-material/OpenInNewRounded";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
+import PersonOutlineRoundedIcon from "@mui/icons-material/PersonOutlineRounded";
+import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded";
+import TimelineRoundedIcon from "@mui/icons-material/TimelineRounded";
+import SchoolRoundedIcon from "@mui/icons-material/SchoolRounded";
 import { defaultContent, mergeContent } from "../content/ContentContext";
+
+function TabIntro({ children }) {
+  return <Typography variant="body2" sx={{ color: "text.secondary", mb: 2.5 }}>{children}</Typography>;
+}
 
 /* ---------- small reusable inputs ---------- */
 function F({ label, value, onChange, multiline, minRows, hint, sx }) {
@@ -98,18 +106,19 @@ export default function Admin() {
   const [status, setStatus] = useState(null);
   const [busy, setBusy] = useState(false);
   const [tab, setTab] = useState(0);
+  const [dirty, setDirty] = useState(false);
 
-  const setPersonal = (patch) => setDoc((d) => ({ ...d, personal: { ...d.personal, ...patch } }));
-  const updateItem = (key, i, patch) => setDoc((d) => ({ ...d, [key]: d[key].map((it, k) => (k === i ? { ...it, ...patch } : it)) }));
-  const addItem = (key, item) => setDoc((d) => ({ ...d, [key]: [...d[key], item] }));
-  const removeItem = (key, i) => setDoc((d) => ({ ...d, [key]: d[key].filter((_, k) => k !== i) }));
-  const move = (key, i, dir) => setDoc((d) => {
+  const setPersonal = (patch) => { setDirty(true); setDoc((d) => ({ ...d, personal: { ...d.personal, ...patch } })); };
+  const updateItem = (key, i, patch) => { setDirty(true); setDoc((d) => ({ ...d, [key]: d[key].map((it, k) => (k === i ? { ...it, ...patch } : it)) })); };
+  const addItem = (key, item) => { setDirty(true); setDoc((d) => ({ ...d, [key]: [...d[key], item] })); };
+  const removeItem = (key, i) => { setDirty(true); setDoc((d) => ({ ...d, [key]: d[key].filter((_, k) => k !== i) })); };
+  const move = (key, i, dir) => { setDirty(true); setDoc((d) => {
     const arr = [...d[key]];
     const j = i + dir;
     if (j < 0 || j >= arr.length) return d;
     [arr[i], arr[j]] = [arr[j], arr[i]];
     return { ...d, [key]: arr };
-  });
+  }); };
 
   const login = async (e) => {
     e?.preventDefault();
@@ -120,6 +129,7 @@ export default function Admin() {
       if (!r.ok) { setStatus({ type: "error", msg: "Wrong password." }); setBusy(false); return; }
       const saved = await fetch("/api/content").then((x) => (x.ok ? x.json() : {})).catch(() => ({}));
       setDoc(mergeContent(saved));
+      setDirty(false);
       setAuthed(true);
     } catch (err) {
       setStatus({ type: "error", msg: "Couldn't reach the server. Run `vercel dev` or deploy to use the admin." });
@@ -134,7 +144,7 @@ export default function Admin() {
       const data = { personal: doc.personal, projects: doc.projects, experiences: doc.experiences, education: doc.education };
       const r = await fetch("/api/content", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ password, data }) });
       const j = await r.json().catch(() => ({}));
-      if (r.ok) setStatus({ type: "success", msg: "Saved — your live site is updated." });
+      if (r.ok) { setStatus({ type: "success", msg: "Saved — your live site is updated." }); setDirty(false); }
       else setStatus({ type: "error", msg: j.error || "Save failed." });
     } catch (err) {
       setStatus({ type: "error", msg: "Network error while saving." });
@@ -145,6 +155,7 @@ export default function Admin() {
 
   const resetDefaults = () => {
     setDoc(mergeContent(defaultContent));
+    setDirty(true);
     setStatus({ type: "info", msg: "Reverted to defaults (not saved yet — press Save to apply)." });
   };
 
@@ -174,19 +185,27 @@ export default function Admin() {
       <Box sx={{ position: "sticky", top: 0, zIndex: 10, bgcolor: "custom.headerBg", backdropFilter: "blur(8px)", borderBottom: "1px solid", borderColor: "divider" }}>
         <Container maxWidth="md">
           <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ minHeight: 60, gap: 1, flexWrap: "wrap", py: 1 }}>
-            <Typography sx={{ fontWeight: 600 }}>Editing portfolio</Typography>
+            <Stack direction="row" alignItems="center" spacing={1.25}>
+              <Typography sx={{ fontWeight: 600 }}>Editing portfolio</Typography>
+              {dirty && (
+                <Stack direction="row" alignItems="center" spacing={0.6} sx={{ px: 1, py: 0.25, borderRadius: 999, bgcolor: "warning.main", color: "#1a1a17" }}>
+                  <Box sx={{ width: 6, height: 6, borderRadius: "50%", bgcolor: "#1a1a17" }} />
+                  <Typography sx={{ fontSize: "0.7rem", fontWeight: 700 }}>Unsaved</Typography>
+                </Stack>
+              )}
+            </Stack>
             <Stack direction="row" spacing={1} alignItems="center">
               <Button size="small" href="/" target="_blank" endIcon={<OpenInNewRoundedIcon sx={{ fontSize: 16 }} />} sx={{ color: "text.secondary" }}>View site</Button>
               <Button size="small" onClick={resetDefaults} sx={{ color: "text.secondary" }}>Reset</Button>
               <Button size="small" onClick={() => { setAuthed(false); setPassword(""); }} startIcon={<LogoutRoundedIcon sx={{ fontSize: 16 }} />} sx={{ color: "text.secondary" }}>Sign out</Button>
-              <Button size="small" variant="contained" onClick={save} disabled={busy}>{busy ? "Saving…" : "Save changes"}</Button>
+              <Button size="small" variant="contained" onClick={save} disabled={busy || !dirty}>{busy ? "Saving…" : dirty ? "Save changes" : "Saved ✓"}</Button>
             </Stack>
           </Stack>
-          <Tabs value={tab} onChange={(e, v) => setTab(v)} variant="scrollable" scrollButtons="auto" sx={{ minHeight: 40, "& .MuiTab-root": { minHeight: 40, textTransform: "none" } }}>
-            <Tab label="About" />
-            <Tab label={`Work (${doc.projects.length})`} />
-            <Tab label={`Career (${doc.experiences.length})`} />
-            <Tab label={`Education (${doc.education.length})`} />
+          <Tabs value={tab} onChange={(e, v) => setTab(v)} variant="scrollable" scrollButtons="auto" sx={{ minHeight: 44, "& .MuiTab-root": { minHeight: 44, textTransform: "none" } }}>
+            <Tab icon={<PersonOutlineRoundedIcon sx={{ fontSize: 18 }} />} iconPosition="start" label="About" />
+            <Tab icon={<GridViewRoundedIcon sx={{ fontSize: 17 }} />} iconPosition="start" label={`Work (${doc.projects.length})`} />
+            <Tab icon={<TimelineRoundedIcon sx={{ fontSize: 18 }} />} iconPosition="start" label={`Career (${doc.experiences.length})`} />
+            <Tab icon={<SchoolRoundedIcon sx={{ fontSize: 18 }} />} iconPosition="start" label={`Education (${doc.education.length})`} />
           </Tabs>
         </Container>
       </Box>
@@ -197,6 +216,7 @@ export default function Admin() {
         {/* ABOUT */}
         {tab === 0 && (
           <Box>
+            <TabIntro>Your intro, the labeled blocks, your Stack chips, and the “Find me” contact links.</TabIntro>
             <F label="Greeting" value={p.greeting} onChange={(v) => setPersonal({ greeting: v })} />
             <F label="Title" value={p.title} onChange={(v) => setPersonal({ title: v })} />
             <F label="Intro" value={p.intro} onChange={(v) => setPersonal({ intro: v })} multiline />
@@ -244,9 +264,7 @@ export default function Admin() {
         {/* WORK / PROJECTS */}
         {tab === 1 && (
           <Box>
-            <Typography variant="body2" sx={{ color: "text.secondary", mb: 2 }}>
-              <strong>Featured</strong> projects appear under “Professional Work” with a screenshot; the rest become “Side Projects.”
-            </Typography>
+            <TabIntro><strong>Featured</strong> projects appear under “Professional Work” with a screenshot; the rest become “Side Projects.” Drag-free reorder with the ↑ ↓ arrows.</TabIntro>
             {doc.projects.map((pr, i) => (
               <ItemCard key={i} title={pr.title} subtitle={pr.kind} badge={pr.featured ? "Featured" : null} onUp={() => move("projects", i, -1)} onDown={() => move("projects", i, 1)} onDelete={() => removeItem("projects", i)}>
                 <FormControlLabel control={<Switch checked={!!pr.featured} onChange={(e) => updateItem("projects", i, { featured: e.target.checked })} />} label="Featured (Professional Work)" sx={{ mb: 1 }} />
@@ -271,6 +289,7 @@ export default function Admin() {
         {/* CAREER */}
         {tab === 2 && (
           <Box>
+            <TabIntro>Your roles — these render as colored blocks on the Google-Calendar-style timeline. “Links” show as chips on the block.</TabIntro>
             {doc.experiences.map((ex, i) => (
               <ItemCard key={i} title={ex.role} subtitle={`${ex.company} · ${ex.period}`} onUp={() => move("experiences", i, -1)} onDown={() => move("experiences", i, 1)} onDelete={() => removeItem("experiences", i)}>
                 <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
@@ -301,17 +320,23 @@ export default function Admin() {
         {/* EDUCATION */}
         {tab === 3 && (
           <Box>
+            <TabIntro>Degrees and schooling — these become blocks on the Career calendar. Add a link to show a clickable chip (e.g. the university site).</TabIntro>
             {doc.education.map((ed, i) => (
               <ItemCard key={i} title={ed.degree} subtitle={ed.school} onUp={() => move("education", i, -1)} onDown={() => move("education", i, 1)} onDelete={() => removeItem("education", i)}>
                 <F label="Degree" value={ed.degree} onChange={(v) => updateItem("education", i, { degree: v })} />
                 <F label="School" value={ed.school} onChange={(v) => updateItem("education", i, { school: v })} />
                 <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
-                  <F label="Period" value={ed.period} onChange={(v) => updateItem("education", i, { period: v })} />
+                  <F label="Period" hint='e.g. "2020 — 2022" or "2015"' value={ed.period} onChange={(v) => updateItem("education", i, { period: v })} />
                   <F label="Score" hint="e.g. DGPA 8.94" value={ed.score} onChange={(v) => updateItem("education", i, { score: v })} />
+                </Stack>
+                <Typography variant="overline" sx={{ color: "text.secondary", display: "block", mb: 1 }}>Link (optional)</Typography>
+                <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5}>
+                  <TextField size="small" label="Link label" value={ed.link?.label || ""} sx={{ flex: 1 }} onChange={(e) => updateItem("education", i, { link: { ...(ed.link || {}), label: e.target.value } })} />
+                  <TextField size="small" label="Link URL" value={ed.link?.url || ""} sx={{ flex: 2 }} onChange={(e) => updateItem("education", i, { link: { ...(ed.link || {}), url: e.target.value } })} />
                 </Stack>
               </ItemCard>
             ))}
-            <Button startIcon={<AddRoundedIcon />} variant="outlined" onClick={() => addItem("education", { degree: "New degree", school: "", period: "", score: "" })}>Add education</Button>
+            <Button startIcon={<AddRoundedIcon />} variant="outlined" onClick={() => addItem("education", { degree: "New degree", school: "", period: "", score: "", link: null })}>Add education</Button>
           </Box>
         )}
       </Container>

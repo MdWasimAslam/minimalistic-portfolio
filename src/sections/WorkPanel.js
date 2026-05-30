@@ -3,22 +3,14 @@ import NorthEastRoundedIcon from "@mui/icons-material/NorthEastRounded";
 import { motion } from "framer-motion";
 import Panel from "../components/Panel";
 import SmartImage from "../components/SmartImage";
+import Favicon from "../components/Favicon";
 import { useContent } from "../content/ContentContext";
 import { reveal, staggerContainer, viewportOnce } from "../animations/variants";
 
 const MotionBox = motion(Box);
 
-function faviconOf(url) {
-  try {
-    return `https://www.google.com/s2/favicons?domain=${new URL(url).hostname}&sz=64`;
-  } catch (e) {
-    return null;
-  }
-}
-
 function WorkCard({ project }) {
   const href = project.link || project.github;
-  const fav = project.link ? faviconOf(project.link) : null;
   return (
     <MotionBox variants={reveal} sx={{ mb: 4 }}>
       <Box
@@ -42,11 +34,7 @@ function WorkCard({ project }) {
 
       <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={1} sx={{ mt: 1.5 }}>
         <Stack direction="row" alignItems="center" spacing={1} sx={{ minWidth: 0 }}>
-          {fav && (
-            <Box sx={{ width: 20, height: 20, borderRadius: "5px", overflow: "hidden", flexShrink: 0, bgcolor: "#fff", display: "grid", placeItems: "center" }}>
-              <Box component="img" src={fav} alt="" width={16} height={16} loading="lazy" onError={(e) => { e.currentTarget.parentElement.style.display = "none"; }} />
-            </Box>
-          )}
+          {project.link && <Favicon url={project.link} label={project.title} size={20} />}
           <Typography sx={{ fontWeight: 600, fontSize: "1.05rem" }} noWrap>{project.title}</Typography>
         </Stack>
         <Typography variant="overline" sx={{ color: "text.secondary", flexShrink: 0 }}>{project.year}</Typography>

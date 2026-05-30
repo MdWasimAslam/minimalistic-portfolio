@@ -25,7 +25,7 @@ export const experiences = [
     company: "NLB Technology Services Pvt. Ltd.",
     role: "Full Stack Developer",
     designation: "Software Developer",
-    period: "Feb 2022 — Dec 2025",
+    period: "Feb 2022 — Dec 2024",
     location: "Kolkata, India",
     summary:
       "Built an in-house Applicant Tracking System and contributed across healthcare and customer-support products.",

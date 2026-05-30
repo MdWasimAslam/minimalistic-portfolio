@@ -4,11 +4,11 @@ import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import ContentCopyRoundedIcon from "@mui/icons-material/ContentCopyRounded";
 import PaletteOutlinedIcon from "@mui/icons-material/PaletteOutlined";
 import LightModeRoundedIcon from "@mui/icons-material/LightModeRounded";
-import RotatingWord from "../components/RotatingWord";
+import StreamingText from "../components/StreamingText";
 import { useContent } from "../content/ContentContext";
 
-// "Full-" stays put; only the part after it animates. (5 total)
-const SUFFIXES = ["stack developer", "time problem solver", "stack engineer", "time builder", "stack craftsman"];
+// Distinct roles (no repeated "Full-…" pattern), streamed in word-by-word.
+const ROLES = ["Full-stack developer", "Problem solver", "React specialist", "Product-minded engineer", "Relentless shipper"];
 
 function useKolkataClock() {
   const [time, setTime] = useState("");
@@ -47,8 +47,8 @@ export default function TopBar({ themeKey, onPickTheme, themes = [] }) {
           <Stack direction="row" alignItems="center" spacing={1.2} sx={{ minWidth: 0 }}>
             <Typography sx={{ fontWeight: 600, letterSpacing: "-0.01em", whiteSpace: "nowrap" }}>{personal.name}</Typography>
             <Box component="span" sx={{ color: "text.secondary", display: { xs: "none", sm: "block" } }}>·</Box>
-            <Box sx={{ color: "text.secondary", display: { xs: "none", sm: "flex" }, alignItems: "baseline", fontSize: "0.875rem", whiteSpace: "nowrap" }}>
-              Full-<RotatingWord words={SUFFIXES} interval={2800} />
+            <Box sx={{ color: "text.secondary", display: { xs: "none", sm: "block" }, fontSize: "0.875rem", whiteSpace: "nowrap" }}>
+              <StreamingText phrases={ROLES} />
             </Box>
           </Stack>
 

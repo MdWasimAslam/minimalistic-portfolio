@@ -30,19 +30,35 @@ export const achievements = [
   },
 ];
 
-// Education (from resume) — rendered alongside achievements.
+// Education (from resume). `link` is optional → { label, url }.
 export const education = [
   {
     degree: "Master of Computer Applications",
     school: "University of Engineering & Management, Kolkata",
     period: "2020 — 2022",
     score: "DGPA 8.94",
+    link: { label: "UEM Kolkata", url: "https://uem.edu.in/" },
   },
   {
     degree: "Bachelor of Computer Application",
     school: "Techno India Institute of Technology",
     period: "2017 — 2020",
     score: "CGPA 7.48",
+    link: { label: "Techno India", url: "https://www.tiit.ac.in/" },
+  },
+  {
+    degree: "Class XII — BSEB",
+    school: "Chandra Shekhar Janta College, Gaya",
+    period: "2016 — 2017",
+    score: "58%",
+    link: null,
+  },
+  {
+    degree: "Class X — ICSE",
+    school: "Saifee Golden Jubilee English Public School",
+    period: "2014 — 2015",
+    score: "61%",
+    link: null,
   },
 ];
 

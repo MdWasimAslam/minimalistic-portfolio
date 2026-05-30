@@ -10,6 +10,8 @@ export default function Panel({ label, action, children, bodySx }) {
     <Box
       component="section"
       sx={{
+        position: "relative",
+        zIndex: 1, // sits above the peeking cat (zIndex 0)
         minWidth: 0,
         minHeight: 0,
         display: "flex",

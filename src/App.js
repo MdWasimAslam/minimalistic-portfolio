@@ -55,10 +55,12 @@ function App() {
             id="desk"
             component="main"
             sx={{
+              position: "relative",
               display: "grid",
               gridTemplateColumns: { xs: "1fr", lg: "repeat(4, 1fr)" },
               gap: { xs: 1.5, md: 2 },
               p: { xs: 1.5, md: 2 },
+              pt: { xs: 4.5, md: 5 }, // room for the cat to peek over the cards
               height: { lg: `calc(100dvh - ${TOPBAR}px)` },
               overflow: { lg: "hidden" },
             }}
@@ -67,8 +69,8 @@ function App() {
             <CareerPanel />
             <WorkPanel />
             <SidePanel />
+            <CatEasterEgg />
           </Box>
-          <CatEasterEgg />
         </ContentProvider>
       )}
     </ThemeProvider>
