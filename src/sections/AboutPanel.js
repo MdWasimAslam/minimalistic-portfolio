@@ -50,7 +50,7 @@ export default function AboutPanel() {
         {/* separators start after the Kolkata line */}
         <Sep />
 
-        {personal.about.map((row, i) => (
+        {(personal.about || []).map((row, i) => (
           <Box key={row.label}>
             <DefRow label={row.label}>{row.value}</DefRow>
             <Sep />
@@ -61,7 +61,7 @@ export default function AboutPanel() {
         <motion.div variants={reveal}>
           <Typography variant="overline" sx={{ color: "text.secondary", display: "block", mb: 1 }}>Stack</Typography>
           <Stack direction="row" flexWrap="wrap" gap={0.6}>
-            {personal.tools.map((t) => (
+            {(personal.tools || []).map((t) => (
               <TechChip key={t} name={t} dense />
             ))}
           </Stack>
@@ -78,8 +78,8 @@ export default function AboutPanel() {
 
         {/* contact links */}
         <Typography variant="overline" sx={{ color: "text.secondary", display: "block", mb: 0.75 }}>Find me</Typography>
-        <MotionBox variants={staggerContainer(0.05)} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-          {personal.contacts.map((c) => (
+        <MotionBox variants={staggerContainer(0.05)} initial="hidden" animate="visible">
+          {(personal.contacts || []).map((c) => (
             <motion.div key={c.label} variants={reveal}>
               <Box
                 component="a"

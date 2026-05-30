@@ -5,7 +5,7 @@ import SchoolRoundedIcon from "@mui/icons-material/SchoolRounded";
 import { motion } from "framer-motion";
 import Panel from "../components/Panel";
 import { useContent } from "../content/ContentContext";
-import { reveal, staggerContainer, viewportOnce } from "../animations/variants";
+import { reveal, staggerContainer } from "../animations/variants";
 
 const MotionBox = motion(Box);
 const MONTHS = { jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5, jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11 };
@@ -27,7 +27,7 @@ function toFrac(token) {
   return parseInt(y, 10) + (month != null ? month / 12 : 0);
 }
 function parsePeriod(period) {
-  const [a, b] = period.split(/\s*[—–-]\s*/);
+  const [a, b] = (period || "").split(/\s*[—–-]\s*/);
   const start = toFrac(a);
   const end = toFrac(b) ?? start;
   return start == null ? null : { start, end: Math.max(end, start + 0.5) };
@@ -58,13 +58,20 @@ export default function CareerPanel() {
   const { experiences, education } = useContent();
 
   const raw = [
-    ...experiences.map((e) => ({ kind: "work", title: e.role, designation: e.designation, org: e.company, period: e.period.replace(/present/i, "Now"), link: e.links && e.links[0] })),
-    ...education.map((e) => ({ kind: "edu", title: e.degree, org: e.school, period: e.period, link: e.link || null })),
+    ...experiences.map((e) => ({ kind: "work", title: e.role, designation: e.designation, org: e.company, period: (e.period || "").replace(/present/i, "Now"), link: e.links && e.links[0] })),
+    ...education.map((e) => ({ kind: "edu", title: e.degree, org: e.school, period: e.period || "", link: e.link || null })),
   ]
     .map((e, i) => ({ ...e, ...parsePeriod(e.period), color: PALETTE[i % PALETTE.length] }))
     .filter((e) => e.start != null);
 
   const events = layout(raw);
+  if (!events.length) {
+    return (
+      <Panel label="Career Journey">
+        <Box sx={{ color: "text.secondary", fontSize: "0.85rem", py: 2 }}>No timeline entries yet.</Box>
+      </Panel>
+    );
+  }
   const top = Math.ceil(Math.max(...events.map((e) => e.end)));
   const bottom = Math.floor(Math.min(...events.map((e) => e.start)));
   const height = (top - bottom) * PX;
@@ -77,7 +84,7 @@ export default function CareerPanel() {
 
   return (
     <Panel label="Career Journey">
-      <MotionBox variants={staggerContainer(0.06)} initial="hidden" whileInView="visible" viewport={viewportOnce} sx={{ position: "relative", height, mt: 0.5 }}>
+      <MotionBox variants={staggerContainer(0.06)} initial="hidden" animate="visible" sx={{ position: "relative", height, mt: 0.5 }}>
         {/* year gridlines + labels */}
         {years.map((yr) => (
           <Box key={yr} sx={{ position: "absolute", left: 0, right: 0, top: y(yr) }}>

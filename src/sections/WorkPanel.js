@@ -5,7 +5,7 @@ import Panel from "../components/Panel";
 import SmartImage from "../components/SmartImage";
 import Favicon from "../components/Favicon";
 import { useContent } from "../content/ContentContext";
-import { reveal, staggerContainer, viewportOnce } from "../animations/variants";
+import { reveal, staggerContainer } from "../animations/variants";
 
 const MotionBox = motion(Box);
 
@@ -42,7 +42,7 @@ function WorkCard({ project }) {
       <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.3 }}>{project.kind}</Typography>
       <Typography variant="body2" sx={{ color: "text.primary", mt: 1 }}>{project.description}</Typography>
       <Stack direction="row" flexWrap="wrap" gap={0.7} sx={{ mt: 1.5 }}>
-        {project.tags.map((t) => (
+        {(project.tags || []).map((t) => (
           <Chip key={t} label={t} size="small" sx={{ height: 22, fontSize: "0.72rem" }} />
         ))}
       </Stack>
@@ -60,9 +60,9 @@ export default function WorkPanel() {
   const features = projects.filter((p) => p.featured);
   return (
     <Panel label="Professional Work">
-      <MotionBox variants={staggerContainer(0.1)} initial="hidden" whileInView="visible" viewport={viewportOnce}>
-        {features.map((p) => (
-          <WorkCard key={p.title} project={p} />
+      <MotionBox variants={staggerContainer(0.1)} initial="hidden" animate="visible">
+        {features.map((p, i) => (
+          <WorkCard key={p.title || i} project={p} />
         ))}
       </MotionBox>
     </Panel>

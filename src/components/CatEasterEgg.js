@@ -36,7 +36,7 @@ export default function CatEasterEgg() {
 
   const scheduleNext = useCallback(() => {
     clearTimers();
-    const appearIn = 4000 + Math.random() * 9000;
+    const appearIn = 1200 + Math.random() * 1000;
     timers.current.push(
       setTimeout(() => {
         setSpot(getSpot());
@@ -61,7 +61,7 @@ export default function CatEasterEgg() {
   const onCatClick = () => {
     setVisible(false);
     clearTimers();
-    setTimeout(() => setOpen(true), 220);
+    timers.current.push(setTimeout(() => setOpen(true), 220));
   };
 
   const onClose = () => {

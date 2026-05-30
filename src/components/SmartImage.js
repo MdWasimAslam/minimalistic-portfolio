@@ -26,6 +26,10 @@ export default function SmartImage({
   const [loaded, setLoaded] = useState(false);
   const [errored, setErrored] = useState(false);
 
+  // No source → behave like an error so the fallback monogram shows instead of
+  // shimmering forever (the <img> that fires onLoad/onError never mounts).
+  const failed = errored || !src;
+
   const initials = fallbackLabel
     .replace(/[^a-zA-Z0-9 ]/g, "")
     .split(" ")
@@ -49,7 +53,7 @@ export default function SmartImage({
       }}
     >
       {/* skeleton / fallback layer */}
-      {(!loaded || errored) && (
+      {(!loaded || failed) && (
         <Box
           aria-hidden
           sx={(theme) => ({
@@ -57,23 +61,23 @@ export default function SmartImage({
             inset: 0,
             display: "grid",
             placeItems: "center",
-            background: errored
+            background: failed
               ? theme.palette.custom.skeleton
               : `linear-gradient(100deg, ${theme.palette.custom.skeleton} 30%, ${theme.palette.custom.skeletonShine} 50%, ${theme.palette.custom.skeleton} 70%)`,
-            backgroundSize: errored ? "auto" : "200% 100%",
-            animation: errored ? "none" : "smartimg-shimmer 1.4s ease-in-out infinite",
+            backgroundSize: failed ? "auto" : "200% 100%",
+            animation: failed ? "none" : "smartimg-shimmer 1.4s ease-in-out infinite",
             "@keyframes smartimg-shimmer": {
               "0%": { backgroundPosition: "200% 0" },
               "100%": { backgroundPosition: "-200% 0" },
             },
           })}
         >
-          {errored && initials && (
+          {failed && initials && (
             <Box sx={{ textAlign: "center" }}>
               <Box sx={{ fontSize: { xs: "2.4rem", md: "3.4rem" }, fontWeight: 700, letterSpacing: "-0.04em", color: "text.primary" }}>
                 {initials}
               </Box>
-              <Box sx={{ width: 8, height: 8, borderRadius: "50%", background: "success.main", mx: "auto", mt: 1.5 }} />
+              <Box sx={{ width: 8, height: 8, borderRadius: "50%", bgcolor: "success.main", mx: "auto", mt: 1.5 }} />
             </Box>
           )}
         </Box>

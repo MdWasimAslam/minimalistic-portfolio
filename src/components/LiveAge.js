@@ -28,7 +28,7 @@ export default function LiveAge({ birthDate }) {
 
   return (
     <Box component="span" sx={{ fontVariantNumeric: "tabular-nums" }}>
-      {age.toFixed(10)} years old
+      {Number.isFinite(age) ? `${age.toFixed(10)} years old` : "—"}
     </Box>
   );
 }

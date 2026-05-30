@@ -35,7 +35,7 @@ export default function TopBar({ themeKey, onPickTheme, themes = [] }) {
       setCopied(true);
       setTimeout(() => setCopied(false), 1800);
     } catch (e) {
-      window.location.href = personal.socials.email;
+      window.location.href = personal.socials?.email || `mailto:${personal.email}`;
     }
   };
 

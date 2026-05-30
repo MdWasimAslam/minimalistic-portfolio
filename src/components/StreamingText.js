@@ -8,12 +8,12 @@ import { Box } from "@mui/material";
 export default function StreamingText({ phrases, sx }) {
   const reduce = typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
   const [idx, setIdx] = useState(0);
-  const [sub, setSub] = useState(reduce ? phrases[0] : "");
+  const [sub, setSub] = useState(reduce ? (phrases && phrases[0]) || "" : "");
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    if (reduce) return undefined;
-    const full = phrases[idx];
+    if (reduce || !phrases || !phrases.length) return undefined;
+    const full = phrases[idx] || "";
 
     // finished typing → hold, then start deleting
     if (!deleting && sub === full) {

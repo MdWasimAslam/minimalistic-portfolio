@@ -3,7 +3,7 @@ import NorthEastRoundedIcon from "@mui/icons-material/NorthEastRounded";
 import { motion } from "framer-motion";
 import Panel from "../components/Panel";
 import { useContent } from "../content/ContentContext";
-import { reveal, staggerContainer, viewportOnce } from "../animations/variants";
+import { reveal, staggerContainer } from "../animations/variants";
 
 const MotionBox = motion(Box);
 const COLORS = ["#5B8CFF", "#46D67E", "#BD93F9", "#F2A65A", "#EC6A8C"];
@@ -13,12 +13,12 @@ export default function SidePanel() {
   const side = projects.filter((p) => !p.featured);
   return (
     <Panel label="Side Projects">
-      <MotionBox variants={staggerContainer(0.06)} initial="hidden" whileInView="visible" viewport={viewportOnce}>
+      <MotionBox variants={staggerContainer(0.06)} initial="hidden" animate="visible">
         {side.map((p, i) => {
           const href = p.link || p.github;
           const color = COLORS[i % COLORS.length];
           return (
-            <motion.div key={p.title} variants={reveal}>
+            <motion.div key={p.title || i} variants={reveal}>
               <Box
                 component={href ? "a" : "div"}
                 href={href || undefined}
@@ -40,7 +40,7 @@ export default function SidePanel() {
                 <Stack direction="row" alignItems="flex-start" justifyContent="space-between" gap={1.5}>
                   <Stack direction="row" spacing={1.5} alignItems="flex-start" sx={{ minWidth: 0 }}>
                     <Box sx={{ width: 32, height: 32, borderRadius: 1.5, flexShrink: 0, display: "grid", placeItems: "center", mt: 0.2, color, bgcolor: `${color}22`, fontWeight: 700, fontSize: "0.95rem" }}>
-                      {p.title[0]}
+                      {(p.title || "?")[0]}
                     </Box>
                     <Box sx={{ minWidth: 0 }}>
                       <Typography className="r-title" sx={{ fontWeight: 600, transition: "color .3s ease" }}>{p.title}</Typography>
